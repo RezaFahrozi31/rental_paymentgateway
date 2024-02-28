@@ -1,0 +1,122 @@
+{% extends 'back/base.html' %} {% block content %}
+
+<div class="container-fluid py-4">
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="table-responsive">
+          <div class="toolbar">
+            <a class="btn btn-sm btn-danger" href="{% url 'tambah_transaksi' %}"
+              >+ Transaksi</a
+            >
+          </div>
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  No
+                </th>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  Kendaraan
+                </th>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  tgl_penyewaan
+                </th>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2"
+                >
+                  tgl_kembali
+                </th>
+                <th
+                  class="text-center text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  harga
+                </th>
+                <th
+                  class="text-center text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  total
+                </th>
+                <th
+                  class="text-center text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  Aksi
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a in transaksi_back %}
+              <tr>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <h6 class="mb-0 font-weight-normal text-sm">
+                      {{ forloop.counter }}
+                    </h6>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <h6 class="mb-0 font-weight-normal text-sm">
+                      {{ a.kendaraan }}
+                    </h6>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">
+                    {{ a.tgl_penyewaan }}
+                  </p>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">
+                    {{ a.tgl_kembali}}
+                  </p>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">{{ a.harga }}</p>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">{{ a.total }}</p>
+                </td>
+                <td class="align-middle text-center">
+                  <a
+                    href="{% url 'hapus_transaksi' a.id %}"
+                    class="btn btn-sm btn-danger"
+                    >Hapus</a
+                  >
+                  {% if not a.sudah_dikembalikan %}
+                  <form
+                    method="post"
+                    action="{% url 'konfirmasi_pengembalian' transaksi_id=a.id %}"
+                  >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-info">
+                      Konfirmasi Pengembalian
+                    </button>
+                  </form>
+                  {% else %}
+                  <span class="badge bg-success">Sudah Kembali</span>
+                  {% endif %}
+                  <a
+                    href="{% url 'lihat_transaksi' a.id %}"
+                    class="btn btn-sm btn-info"
+                    >Lihat</a
+                  >
+                </td>
+
+                {% endfor %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

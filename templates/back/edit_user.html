@@ -1,0 +1,23 @@
+{% extends 'back/base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="card mx-auto" style="max-width: 400px;">
+    <div class="card-header" style="background-color: #007BFF; color: white; text-align: center;">
+      <h2 class="card-title">Edit User</h2>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <button type="submit" class="btn btn-primary btn-block mt-3">Save changes</button>
+      </form>
+    </div>
+    <div class="card-footer text-center mt-3">
+      <a href="{% url 'tabel_users' %}" class="btn btn-secondary">Back to User List</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

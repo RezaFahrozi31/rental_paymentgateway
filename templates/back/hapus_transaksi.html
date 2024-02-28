@@ -1,0 +1,32 @@
+{% extends 'back/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hapus Transaksi</title>
+    <!-- Add your CSS stylesheets or links to CDN here -->
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Konfirmasi Penghapusan Transaksi</h1>
+        <p>Anda yakin ingin menghapus transaksi ini?</p>
+        <p>Tanggal Penyewaan: {{ transaksi.tgl_penyewaan }}</p>
+        <p>Tanggal Kembali: {{ transaksi.tgl_kembali }}</p>
+        <!-- Add other details as needed -->
+
+        <form method="post" action="{% url 'hapus_transaksi' transaksi.id %}">
+            {% csrf_token %}
+            <input type="submit" value="Hapus" class="btn btn-danger">
+            <a href="{% url 'transaksi_back' %}" class="btn btn-primary">Batal</a>
+        </form>
+    </div>
+    <!-- Add your JavaScript scripts or links to CDN here -->
+</body>
+</html>
+
+{% endblock content %}

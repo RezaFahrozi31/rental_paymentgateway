@@ -1,0 +1,27 @@
+{% extends 'back/base.html' %}
+
+{% block content %}
+
+<div class="container my-4">
+    <div class="card mx-auto" style="max-width: 400px">
+      <div
+        class="card-header"
+        style="background-color: #007bff; color: white; text-align: center"
+      >
+        <h2 class="card-title">Tambah Transaksi</h2>
+      </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- Add more form fields as needed -->
+
+        <button type="submit" class="btn btn-primary btn-block mt-3">Simpan</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{{ form.as_p }}

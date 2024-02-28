@@ -1,0 +1,92 @@
+{% extends 'front/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+    <br><br><br><br><br>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6">
+                    <form method="post" action="{% url 'edit_profile' %}">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Edit Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- Username -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="username">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username" value="{{ biodata.user.username }}" readonly>
+                                        </div>
+                                    </div>
+                                    <!-- Email address -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="{{ biodata.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- First Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nama_depan">Nama Depan</label>
+                                            <input type="text" class="form-control" id="nama_depan" name="nama_depan" value="{{ biodata.nama_depan }}">
+                                        </div>
+                                    </div>
+                                    <!-- Last Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nama_belakang">Nama Belakang</label>
+                                            <input type="text" class="form-control" id="nama_belakang" name="nama_belakang" value="{{ biodata.nama_belakang }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- Telephone -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="telp">Telephone</label>
+                                            <input type="text" class="form-control" id="telp" name="telp" value="{{ biodata.telp }}">
+                                        </div>
+                                    </div>
+                                    <!-- Address -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="alamat">Alamat</label>
+                                            <input type="text" class="form-control" id="alamat" name="alamat" value="{{ biodata.alamat }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Update Button -->
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mt-5">
+                        <div class="card-header">
+                            <h4 class="card-title">My Profile</h4>
+                        </div>
+                        <div class="card-body">
+                            <strong>{{ biodata.user.username }}</strong><br>
+                            Nama Depan   : {{ biodata.nama_depan }}<br>
+                            Nama Belakang: {{ biodata.nama_belakang }}<br>
+                            Email        : {{ biodata.email }}<br>
+                            Telp         : {{ biodata.telp }}<br>
+                            Alamat       : {{ biodata.alamat }}<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

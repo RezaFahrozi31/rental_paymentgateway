@@ -1,0 +1,32 @@
+<!-- tagihan.html -->
+{% extends 'front/base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tagihan</title>
+    <!-- Add your CSS stylesheets or links to CDN here -->
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Halaman Tagihan</h1>
+
+        {% if error_message %}
+            <p>{{ error_message }}</p>
+        {% else %}
+            <p>Tanggal Penyewaan: {{ tgl_penyewaan }}</p>
+            <p>Tanggal Kembali: {{ tgl_kembali }}</p>
+            <p>Kendaraan Terpilih: {{ kendaraan_terpilih.nama }}</p>
+            <p>Total Biaya: Rp {{ total_biaya }}</p>
+        {% endif %}
+    </div> <!-- Close the container div -->
+
+    <!-- Add your JavaScript scripts or links to CDN here -->
+</body>
+</html>
+
+{% endblock content %}

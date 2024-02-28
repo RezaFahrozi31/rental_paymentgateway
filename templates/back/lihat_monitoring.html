@@ -1,0 +1,91 @@
+{% extends "back/base.html" %}
+
+{% block content %}
+<style>
+        @media print {
+        .print-button {
+            display: none;
+        }
+    }
+    body, div, h2, form, label, input, textarea {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-size: 16px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px; /* Perbesar ukuran teks h2 */
+    }
+
+    label {
+        font-size: 18px; /* Perbesar ukuran teks label */
+        margin-bottom: 10px;
+        display: block; /* Membuat label tampil sebagai blok */
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #808080;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px; /* Perbesar ukuran teks tombol */
+        margin-top: 20px;
+    }
+    .btn-primary:hover {
+        background-color: #606060;
+    }
+</style>
+    <div class="container">
+        <h2>Detail Monitoring</h2>
+        <label><strong>Kendaraan:</strong> {{ monitoring.kendaraan }}</label>
+        <label><strong>KM Kendaraan:</strong> {{ monitoring.km_kendaraan }}</label>
+        <label><strong>Oli:</strong> {{ monitoring.oli }}</label>
+        <label><strong>Ban:</strong> {{ monitoring.ban }}</label>
+        <label><strong>Air Radiator:</strong> {{ monitoring.air_radiator }}</label>
+        <label><strong>Air Wiper:</strong> {{ monitoring.air_wiper }}</label>
+        <label><strong>Lampu:</strong> {{ monitoring.lampu }}</label>
+        <label><strong>Tanggal Pemeriksaan Kendaraan:</strong> {{ monitoring.tgl_pemeriksaan_kendaraan }}</label>
+        <label><strong>Tanggal Perawatan Kendaraan:</strong> {{ monitoring.tgl_perawatan_kendaraan }}</label>
+        <a href="{% url 'monitoring' %}" class="btn btn-primary">Kembali ke Daftar Monitoring</a>
+        <a href="javascript:void(0);" id="print-button" class="btn btn-primary">Print</a>
+    </div>
+
+<script>
+        // Fungsi untuk menangani pencetakan halaman
+        function printPage() {
+            window.print();
+        }
+    
+        // Menambahkan event listener ke tombol "Print"
+        document.getElementById("print-button").addEventListener("click", printPage);
+</script> 
+</body>
+</html>
+
+{% endblock %}

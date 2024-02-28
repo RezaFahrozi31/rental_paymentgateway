@@ -1,0 +1,32 @@
+{% extends 'front/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-5">
+       <br>
+        <h2 class="mt-4">Mobil Tersedia:</h2>
+        <p>Tanggal Penyewaan: {{tgl_penyewaan}}</p>
+        <p>Tanggal Kembali: {{tgl_kembali}}</p>
+        <div class="row">
+            {% for mobil in kendaraan_tersedia %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{% static 'front/img/' %}{{ mobil.nama|lower }}.jpg" class="card-img-top" alt="{{ mobil.nama }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ mobil.nama }}</h5>
+                            <p class="card-text">Harga Sewa: {{ mobil.harga }} per hari</p>
+                            <a href="{% url 'pemesanan_kendaraan' mobil.no_polisi tgl_penyewaan tgl_kembali %}" class="btn btn-primary">Pesan Mobil</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <style>
+        .card-img-top {
+            height: 200px; /* Sesuaikan tinggi dengan kebutuhan Anda */
+            object-fit: cover;
+        }
+    </style>
+{% endblock content %}
+ 

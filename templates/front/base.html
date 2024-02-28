@@ -1,0 +1,154 @@
+{% load static %}
+{% load auth_extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/png" href="{% static 'front/img/tawakal.png' %}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Rental Mobil CV Tawakal Bersaudara 
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="{% static 'front/css/material-kit.css' %}?v=2.2.1" rel="stylesheet" />
+</head>
+
+<body class="ecommerce-page sidebar-collapse">
+    <nav class="navbar navbar-default    fixed-top  navbar-expand-lg " >
+      <div class="container">
+        <div class="navbar-translate">
+          <a class="navbar-brand" href="{% url 'home' %}" style="font-family: Arial, sans-serif;">
+            <img src="{% static 'front/img/tawakal.png' %}" width="30" height="30">
+              CV Tawakal Bersaudara </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="button-container nav-item iframe-extern">
+                <a href="{% url 'home' %}" class="nav-link">
+                 Home
+                </a>
+              </li>
+            <li class="button-container nav-item iframe-extern">
+              <a href="{% url 'penjadwalan' %}" class="nav-link">
+                 pemesanan
+              </a>
+            </li>
+            <li class="button-container nav-item iframe-extern">
+              {% if request.user.is_anonymous %}
+              <a href="{% url 'login' %}" class="btn btn-rose btn-round btn-block">
+                <i class="material-icons"></i> Login
+              </a>
+              {% else %}
+             
+
+              {% if request.user|has_group:'Operator' %}
+                  <!-- Jika user termasuk dalam grup 'Operator' -->
+                  <!-- Tidak menampilkan tautan profil dan logout -->
+              {% else %}
+                  <!-- Jika user tidak termasuk dalam grup 'Operator' -->
+                  <a href="{% url 'profile' %}" class="button-container">
+                      <i class="material-icons">account_circle</i>
+                  </a>
+                  <a href="{% url 'logout' %}" class="button-container">
+                      <i class="material-icons">exit_to_app</i>
+                  </a>
+              {% endif %}
+              {% if request.user|has_group:'Operator' %}
+              <a href="{% url 'dashboard' %}" class="btn btn-rose btn-round btn-block">
+                <i class="material-icons"></i> Dashboard
+              </a>
+              {% endif %}
+              {% endif %}
+              
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End navbar -->
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <footer class="footer footer-big" style="background-color: #FFFFFF">
+      <div class="container">
+        <div class="content">
+          <div class="row">
+          <div class="copyright float-right">
+            Copyright &#xA9; <script>
+              document.write(new Date().getFullYear())
+            </script> CV Tawakal Bersaudara.
+          </div>
+        </div>
+      </footer>
+
+            <!--   Core JS Files   -->
+        <script src="{% static 'front/js/core/jquery.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'front/js/core/popper.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'front/js/core/bootstrap-material-design.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'front/js/plugins/moment.min.js' %}"></script>
+        <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+        <script src="{% static 'front/js/plugins/bootstrap-datetimepicker.js' %}" type="text/javascript"></script>
+        <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+        <script src="{% static 'front/js/plugins/nouislider.min.js' %}" type="text/javascript"></script>
+        <!--  Google Maps Plugin    -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+        <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+        <script src="{% static 'front/js/plugins/bootstrap-tagsinput.js' %}"></script>
+        <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+        <script src="{% static 'front/js/plugins/bootstrap-selectpicker.js' %}" type="text/javascript"></script>
+        <!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+        <script src="{% static 'front/js/plugins/jasny-bootstrap.min.js' %}" type="text/javascript"></script>
+        <!--	Plugin for Small Gallery in Product Page -->
+        <script src="{% static 'front/js/plugins/jquery.flexisel.js' %}" type="text/javascript"></script>
+        <!-- Plugins for presentation and navigation  -->
+        <script src="{% static 'front/demo/modernizr.js' %}" type="text/javascript"></script>
+        <script src="{% static 'front/demo/vertical-nav.js' %}" type="text/javascript"></script>
+        <!-- Place this tag in your head or just before your close body tag. -->
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <!-- Js With initialisations For Demo Purpose, Don't Include it in Your Project -->
+        <script src="{% static 'front/demo/demo.js' %}" type="text/javascript"></script>
+        <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+        <script src="{% static 'front/js/material-kit.js' %}?v=2.2.1" type="text/javascript"></script>
+        <script>
+            $(document).ready(function() {
+      var slider2 = document.getElementById('sliderRefine');
+
+      noUiSlider.create(slider2, {
+        start: [101, 790],
+        connect: true,
+        range: {
+          'min': [30],
+          'max': [900]
+        }
+      });
+
+      var limitFieldMin = document.getElementById('price-left');
+      var limitFieldMax = document.getElementById('price-right');
+
+      slider2.noUiSlider.on('update', function(values, handle) {
+        if (handle) {
+          limitFieldMax.innerHTML = $('#price-right').data('currency') + Math.round(values[handle]);
+        } else {
+          limitFieldMin.innerHTML = $('#price-left').data('currency') + Math.round(values[handle]);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

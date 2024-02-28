@@ -1,0 +1,73 @@
+{% extends 'front/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="page-header header-filter" data-parallax="true" style="background-image: url('static/front/img/tawakal.png'); height: 500px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <div class="brand text-center">
+                        <h1 style="font-size: 24px;">"Kemudi Sejauh Impian, Rental CV Tawakal Bersaudara Siap Mengantar"</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+    <!-- Card Content -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'front/img/JAZZ.jpg' %}" class="card-img-top" alt="Gambar 1" style="height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Honda - Jazz </h5>
+                        <p class="card-text"><strong>No. Polisi:</strong> KT 1855 OY </p>
+                        <p class="card-text"><strong>Kapasitas</strong> 5 Penumpang</p>
+                        <p class="card-text"><strong>Tahun Kendaraan:</strong> 2014</p>
+                        <p class="card-text"><strong>Harga</strong> 350.000</p>
+                        <!-- <a href="{}" class="btn btn-primary">Lihat Detail</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'front/img/BRIO.jpg' %}" class="card-img-top" alt="Gambar 2" style="height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Honda - Brio </h5>
+                        <p class="card-text"><strong>No. Polisi:</strong> KT 1780 OG </p>
+                        <p class="card-text"><strong>Kapasitas</strong> 5 Penumpang</p>
+                        <p class="card-text"><strong>Tahun Kendaraan:</strong> 2021</p>
+                        <p class="card-text"><strong>Harga</strong> 300.000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'front/img/MOBILIO.jpg' %}" class="card-img-top" alt="Gambar 3" style="height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Honda - Mobilio</h5>
+                        <p class="card-text"><strong>No. Polisi:</strong> KT 1728 CQ</p>
+                        <p class="card-text"><strong>Kapasitas</strong> 7 Penumpang</p>
+                        <p class="card-text"><strong>Tahun Kendaraan:</strong> 2015</p>
+                        <p class="card-text"><strong>Harga</strong> 350.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Include Bootstrap JS dan jQuery untuk fungsi-fungsi Bootstrap -->
+</body>
+</html>
+
+{% endblock content %}

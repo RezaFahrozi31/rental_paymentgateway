@@ -1,0 +1,55 @@
+{% extends 'front/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="{% static 'front/css/style.css' %}" />
+
+</head>
+<body>
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form">
+						<div class="booking-bg">
+							<div class="form-header">
+								<h2>Buat Pesanan Mu</h2>
+								<p>Rental Mobil Tawakal Bersaudara, Sebagai Penyedia Kendaraan Terbaik, Menawarkan Armada Modern dan Layanan Prima untuk Menjamin Pengalaman Perjalanan Anda yang Optimal.</p>
+							</div>
+						</div>
+						<form role="form" class="text-start" method="POST">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="form-label">Tanggal Mulai</span>
+										<input name="tgl_penyewaan" class="form-control" type="datetime-local" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="form-label">Tanggal Selesai</span>
+										<input name="tgl_kembali" class="form-control" type="datetime-local" required>
+									</div>
+								</div>
+							</div>
+							<div class="form-btn">
+								<button type="submit" class="btn">Cek Ketersediaan Mobil</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends "back/base.html" %}
+
+{% block content %}
+<div class="container">
+  <h2>Hapus Monitoring</h2>
+  <p>Anda yakin ingin menghapus data monitoring ini?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Hapus</button>
+    <a href="{% url 'monitoring' %}" class="btn btn-secondary">Batal</a>
+  </form>
+</div>
+{% endblock %}

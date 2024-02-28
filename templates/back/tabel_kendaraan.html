@@ -1,0 +1,83 @@
+{% extends 'back/base.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="table-responsive">
+          <div class="toolbar">
+            <a class="btn btn-sm btn-danger" href="{% url 'tambah_kendaraan' %}">+ Kendaaraan</a>
+          </div>
+          <table class="table align-items-center mb-0">
+            <thead>
+                <tr>
+                    <th class="text-uppercase text-xxs font-weight-bolder opacity-7">
+                        No
+                    </th>
+                    <th class="text-uppercase text-xxs font-weight-bolder opacity-7">
+                        no_polisi
+                    </th>
+                    <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">
+                        nama
+                    </th>
+                    <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">
+                        merk_kendaraan
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                        harga
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in kendaraan %}
+                <tr>
+                    <td>
+                        <div class="d-flex px-2 py-1">
+                            <h6 class="mb-0 font-weight-normal text-sm">{{ forloop.counter }}</h6>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex px-2 py-1">
+                            <h6 class="mb-0 font-weight-normal text-sm">{{ a.no_polisi }}</h6>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.nama }}</p>
+                    </td>
+                    <td>
+                        <span class="badge badge-dot me-4">
+                            <i class="bg-info"></i>
+                            <span class="text-dark text-xs">{{ a.kategori }}</span>
+                        </span>
+                    </td>
+                    <td class="align-middle text-center">
+                        <p class="text-sm font-weight-normal mb-0">{{ a.harga }}</p>
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_kendaraan' a.id %}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{% url 'hapus_kendaraan' a.id %}" class="btn btn-sm btn-danger">Hapus</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer py-4">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6 mb-lg-0 mb-4">
+          <div class="copyright text-center text-sm text-muted text-lg-start">
+            © <script>document.write(new Date().getFullYear());</script>, made with kerja keras</i> by
+            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">CV Tawakal Bersaudara</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+{% endblock content %}

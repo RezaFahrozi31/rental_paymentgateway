@@ -1,0 +1,97 @@
+{% extends 'back/base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaction Calendar</title>
+    <!-- FullCalendar.io CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css"
+    />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- FullCalendar.io JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+    <style>
+      .card-calendar {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      #fullCalendar {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="container-fluid">
+        <div class="header text-center">
+          <h3 class="title"></h3>
+          <!-- Your additional header content goes here -->
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-10 ml-auto mr-auto">
+            <div class="card card-calendar">
+              <div class="card-body">
+                <div id="fullCalendar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // Inisialisasi FullCalendar
+        $("#fullCalendar").fullCalendar({
+          header: {
+            left: "prev,next today",
+            center: "title",
+            right: "month,agendaWeek,agendaDay",
+          },
+          events: {
+            url: '{% url "get_transactions" %}',
+            // Parameter tambahan jika diperlukan
+            data: {
+              // Tambahkan parameter tambahan di sini
+            },
+            success: function (response) {
+              console.log(response);
+              var events = [];
+              // Ubah format data respons ke format acara FullCalendar
+              response.forEach(function (transaction) {
+                events.push({
+                  title: transaction.title,
+                  start: transaction.start,
+                  end: transaction.end,
+                  color: transaction.color,
+                  // Tambahkan field lain jika diperlukan
+                });
+              });
+              // Render acara di FullCalendar
+              $("#fullCalendar").fullCalendar("renderEvents", events, true);
+            },
+          },
+          eventClick: function (event) {
+            alert("Rincian Transaksi:\n" + event.title);
+          },
+          eventRender: function (event, element) {
+            // Atur warna latar belakang acara secara dinamis
+            element.css("background-color", event.color);
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
+{% endblock content %}

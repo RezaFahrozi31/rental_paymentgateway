@@ -1,0 +1,84 @@
+{% extends 'back/base.html' %}
+
+{% block content %}
+<style>
+ /* Reset beberapa default styling */
+body, div, h2, form, label, input, textarea {
+    margin: 0;
+    padding: 0;
+}
+
+/* Styling untuk container form */
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Styling untuk judul form */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Styling untuk elemen form group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Styling untuk label */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Styling untuk input text dan textarea */
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Styling untuk tombol submit */
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #808080;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Hover efek pada tombol submit */
+input[type="submit"]:hover {
+    background-color: #808080;
+}
+
+
+  </style>
+ <br>
+ <br> 
+ <br>
+ <br>
+
+ <div class="container">
+    <h2>Tambah Kategori</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group">
+            <input type="submit" value="Simpan">
+        </div>
+    </form>
+</div>
+  
+
+{% endblock content %}

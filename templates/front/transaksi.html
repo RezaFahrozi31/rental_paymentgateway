@@ -1,0 +1,232 @@
+{% extends 'front/base.html' %}
+{% load static %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- fontawesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  referrerpolicy="no-referrer" />
+<style>
+  body {
+    padding-top: 20px;
+    background-color: #f8f9fa;
+  }
+
+  .wrapper {
+    margin-bottom: 40px;
+  }
+
+  .title {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #495057;
+  }
+
+  .js-form-message {
+    margin-bottom: 20px;
+  }
+
+  /* Status styling */
+  .text-success {
+    color: #28a745;
+    font-weight: bold;
+  }
+
+  .text-danger {
+    color: #dc3545;
+    font-weight: bold;
+  }
+
+  /* QR Code styling */
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+
+  /* Virtual Account styling */
+  .fs-3 {
+    font-size: 1.5rem;
+  }
+
+  /* Payment Button styling */
+  .btn-info {
+    background-color: #17a2b8;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-info:hover {
+    background-color: #138496;
+  }
+
+  /* Return Button styling */
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+  /* Card styling */
+  .custom-card {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  /* Improved layout styling */
+  .content-section {
+    margin-bottom: 20px;
+  }
+</style>
+
+<div class="container">
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-8">
+      <div class="custom-card">
+        <div class="card-header">
+          <h3 class="title">Transaction Details</h3>
+        </div>
+        <div class="card-body">
+
+          <!-- Reference and QR Code Section -->
+          <div class="row content-section">
+            <div class="col-md-6">
+              <div class="js-form-message">
+                <label class="form-label">Reference</label>
+                <p>{{ transaksi.data.reference }}</p>
+              </div>
+            </div>
+            <div class="col-md-6 text-center">
+              {% if transaksi.data.qr_url %}
+              <div class="js-form-message">
+                <label class="form-label">QR Code</label>
+                <img src="{{ transaksi.data.qr_url }}" alt="QR Code" class="img-fluid">
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Virtual Account Section -->
+          {% if transaksi.data.pay_code %}
+          <div class="row content-section">
+            <div class="col-md-12">
+              <div class="js-form-message">
+                <label class="form-label fs-3 text-gray-800">Virtual Account Number</label>
+                <p class="fs-3 text-gray-800">{{ transaksi.data.pay_code }}</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Payment Button Section -->
+          {% if transaksi.data.payment_url %}
+          <div class="row content-section">
+            <div class="col-md-12 text-center">
+              <div class="js-form-message">
+                <label class="form-label">Payment Button</label>
+                <a href="{{ transaksi.data.pay_url }}" class="btn btn-info btn-sm" target="_blank">Proceed to Payment</a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Payment Method and Customer Name Section -->
+          <div class="row content-section">
+            <div class="col-md-6">
+              <div class="js-form-message">
+                <label class="form-label">Payment Method</label>
+                <p>{{ transaksi.data.payment_name }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="js-form-message">
+                <label class="form-label">Customer Name</label>
+                <p>{{ transaksi.data.customer_name }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status Section -->
+          <div class="row content-section">
+            <div class="col-md-12">
+              <div class="js-form-message">
+                <label class="form-label">Status</label>
+                <p class="{% if transaksi.data.status == 'PAID' %}text-success{% else %}text-danger{% endif %}">
+                  {{ transaksi.data.status }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transaction Items Section -->
+          <div class="row content-section">
+            <div class="col-md-12">
+              <div class="js-form-message">
+                <label class="form-label">Transaction Items</label>
+                <ul>
+                  {% for item in transaksi.data.order_items %}
+                  <li>{{ item.name }} - Quantity: {{ item.quantity }} - Subtotal: {{ item.subtotal }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Instructions Section -->
+          <div class="row content-section">
+            <div class="col-md-12">
+              <div class="js-form-message">
+                <label class="form-label">Payment Instructions</label>
+                {% for instruction in transaksi.data.instructions %}
+                <h5>{{ instruction.title }}</h5>
+                <ol>
+                  {% for step in instruction.steps %}
+                  <li>{{ step|safe }}</li>
+                  {% endfor %}
+                </ol>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <!-- Return Button Section -->
+          <div class="row mt-4">
+            <div class="col-md-12 text-center">
+              <div class="js-form-message">
+                <a href="{% url 'home' %}" class="btn btn-secondary">
+                  <span class="fas fa-angle-left mr-2"></span> Return to Home
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,90 @@
+{% extends 'back/base.html' %} 
+
+{% block content %}
+
+<style>
+  /* Gaya tombol edit dan hapus */
+.btn {
+    margin-right: 10px; /* Jarak antara tombol */
+}
+
+/* Gaya div yang mengandung tombol-tombol */
+.d-flex.justify-content-end {
+    align-items: center; /* Pusatkan tombol di vertikal */
+    height: 100%; /* Atur tinggi div agar sesuai dengan tinggi baris */
+}
+
+/* Gaya untuk tombol-tombol dalam div */
+.d-flex.flex-column.justify-content-center a {
+    margin-bottom: 5px; /* Jarak antara tombol-tombol dalam div */
+}
+
+</style>
+
+<div class="container-fluid py-4">
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="toolbar d-flex justify-content-between">
+          <a class="btn btn-sm btn-danger" href="{% url 'tambah_kategori' %}">+ Kategori</a>
+          <div class="search-box">
+            <form action="{% url 'cari_kategori' %}" method="get">
+              <input type="text" id="search" name="query" placeholder="Cari Kategori" value="{{ request.GET.query }}">
+              <button type="submit" id="search-button" class="btn btn-sm btn-danger">Cari</button>
+            </form>
+          </div>
+        </div>
+        <div class="table-responsive">
+         <!-- Tabel Kategori -->
+     <!-- Tabel Kategori -->
+     <table class="table align-items-center mb-0">
+      <thead>
+          <tr>
+              <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">No</th>
+              <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for a in kategori %}
+          <tr>
+              <td>
+                  <div class="d-flex px-2 py-1">
+                      <div>
+                          <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 font-weight-normal text-sm">{{ forloop.counter  }}</h6>
+                          </div>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="d-flex px-2 py-1">
+                      <div>
+                          <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 font-weight-normal text-sm">{{ a.nama }}</h6>
+                          </div>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="d-flex justify-content-end px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                          <a href="{% url 'edit_kategori' a.id %}" class="btn btn-sm btn-warning">Edit</a>
+                          <a href="{% url 'hapus_kategori' a.id %} " class="btn btn-sm btn-danger">Hapus</a>
+                      </div>
+                  </div>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer py-4">
+    <!-- Footer Content -->
+  </footer>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'back/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lihat Transaksi</title>
+    <!-- Add your CSS stylesheets or links to CDN here -->
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Detail Transaksi</h1>
+        <p>Tanggal Penyewaan: {{ transaksi.tgl_penyewaan }}</p>
+        <p>Tanggal Kembali: {{ transaksi.tgl_kembali }}</p>
+        <!-- Add other details as needed -->
+
+        <p>Kendaraan yang Anda pesan:</p>
+        <div class="card" style="max-width: 300px;">
+            <img src="{% static 'front/img/' %}{{ transaksi.kendaraan.nama|lower }}.jpg" class="card-img-top" alt="{{ transaksi.kendaraan.nama }}">
+            <div class="card-body">
+                {% load humanize %}
+                <h5 class="card-title">{{ transaksi.kendaraan.nama }}</h5>
+                <p>Total Biaya: Rp {{ transaksi.total|intcomma }}</p>
+            </div>
+        </div>
+
+        <a href="{% url 'transaksi_back' %}" class="btn btn-primary">Kembali ke Daftar Transaksi</a>
+    </div>
+    <!-- Add your JavaScript scripts or links to CDN here -->
+</body>
+</html>
+
+{% endblock content %}

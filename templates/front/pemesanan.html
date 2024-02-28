@@ -1,0 +1,186 @@
+{% extends 'front/base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<br>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pemesanan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Konfirmasi Pemesanan</h1>
+        <p>Tanggal Penyewaan: {{ tgl_penyewaan }}</p>
+        <p>Tanggal Kembali: {{ tgl_kembali }}</p>
+
+
+        {% if kendaraan_terpilih %}
+        <p>Kendaraan yang Anda pesan:</p>
+        <div class="card" style="max-width: 300px;">
+            <!-- Add the image of the selected vehicle -->
+            <img src="{% static 'front/img/' %}{{ kendaraan_terpilih.nama|lower }}.jpg" class="card-img-top"
+                alt="{{ kendaraan_terpilih.nama }}">
+            <div class="card-body">
+                {% load humanize %}
+                <h5 class="card-title">{{ kendaraan_terpilih.nama }}</h5>
+                <p>Total Biaya: Rp {{ total_biaya|intcomma }}</p>
+            </div>
+        </div>
+        {% else %}
+        <p>Anda belum memilih kendaraan. Kembali ke <a
+                href="{% url 'kendaraan_tersedia' tgl_penyewaan=tgl_penyewaan tgl_kembali=tgl_kembali %}">pilih
+                kendaraan</a>.</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'pembayaran' %}">
+            {% csrf_token %}
+            <input type="hidden" name="tgl_penyewaan" value="{{ tgl_penyewaan }}">
+            <input type="hidden" name="tgl_kembali" value="{{ tgl_kembali }}">
+            <button type="button" id="openPaymentModal" class="btn btn-primary">Lakukan Pembayaran</button>
+        </form>
+    </div> <!-- Close the container div -->
+
+    <!-- The modal -->
+    <div class="modal" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal content goes here -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Choose a Payment Method</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closePaymentModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="paymentMethodSelect" class="form-label">Select a payment method:</label>
+                    <select id="paymentMethodSelect" class="form-select">
+                        <!-- Options will be added dynamically using JavaScript -->
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="selectPaymentMethod()">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Bootstrap JS (Add your own Bootstrap JS link or use a CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-eLJaxig1rZlE5rP3aYMFw1jKGfKQVGGaYO7g8va8Wz89GoYh4Fg3CjE5r5l5c5m" crossorigin="anonymous">
+    </script>
+    <script>
+        // Function to close the payment modal
+        function closePaymentModal() {
+            $("#paymentModal").hide();
+        }
+
+        // Function to display payment methods in the modal
+        function displayPaymentMethods(paymentMethods) {
+            // Get the payment method select element
+            var paymentMethodSelect = document.getElementById("paymentMethodSelect");
+
+            // Clear any existing options
+            paymentMethodSelect.innerHTML = "";
+
+            // Add a default option
+            var defaultOption = document.createElement("option");
+            defaultOption.text = "Select a payment method";
+            defaultOption.value = "";
+            paymentMethodSelect.add(defaultOption);
+
+            // Loop through each payment method and create options with icons
+            paymentMethods.forEach(function (method) {
+                var option = document.createElement("option");
+                option.value = method.code;
+
+                // Create a span element for the icon
+                var iconSpan = document.createElement("span");
+                iconSpan.className = "icon me-2";
+                iconSpan.style.backgroundImage = "url('" + method.icon_url + "')";
+                iconSpan.style.width = "24px";
+                iconSpan.style.height = "24px";
+                option.appendChild(iconSpan);
+
+                // Add the payment method name to the option
+                option.text = method.name;
+
+                // Add the option to the select element
+                paymentMethodSelect.add(option);
+            });
+        }
+
+        // Function to handle the selection of a payment method
+        function selectPaymentMethod(code) {
+            var selectedOption = document.getElementById("paymentMethodSelect").value;
+
+            if (selectedOption) {
+                createTransaction(selectedOption);
+                closePaymentModal();
+            } else {
+                alert("Please select a payment method.");
+            }
+        }
+
+        $(document).ready(function () {
+            function openPaymentModal() {
+                $("#paymentModal").show();
+                $.ajax({
+                    url: "{% url 'get_payment_methods' %}",
+                    type: "GET",
+                    success: function (data) {
+                        displayPaymentMethods(data.data);
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            }
+
+            $("#openPaymentModal").click(function () {
+                openPaymentModal();
+            });
+
+            $(".close").click(function () {
+                $("#paymentModal").hide();
+            });
+        });
+
+        // Function to create a transaction with the selected payment method
+        function createTransaction(paymentMethod) {
+            var pemesananData = "{{ pemesanan_data }}"; // Dapatkan data pemesanan dari backend
+
+            // Kirim data pemesanan dan username pengguna ke backend untuk membuat transaksi
+            $.ajax({
+                url: "{% url 'create_transaction' %}",
+                method: "POST",
+                data: {
+                    'payment_method': paymentMethod,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    window.location.href = response.redirect_url;
+                },
+                error: function (error) {
+                    // Handle the error response
+                    console.error("Error creating transaction:", error);
+
+                    // You may want to show an error message to the user or take other actions.
+                }
+            });
+
+            // Close the payment modal after creating the transaction
+            closePaymentModal();
+        }
+    </script>
+</body>
+
+</html>
+
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'back/base.html' %} 
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="table-responsive">
+          <div class="toolbar">
+            <a class="btn btn-sm btn-danger" href="{% url 'tambah_monitoring' %}">+ monitoring</a>
+          </div>
+          <table class="table align-items-center mb-0">
+            <thead>
+                <tr>
+                    <th class="text-uppercase text-xxs font-weight-bolder opacity-7">
+                        No
+                    </th>
+                    <th class="text-uppercase text-xxs font-weight-bolder opacity-7">
+                        Kendaraan
+                    </th>
+                    <!-- <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">
+                        No. Polisi
+                    </th> -->
+                    <th class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2">
+                        KM Kendaraan
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                        Oli
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                      Ban
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                      Air Radiator
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                      Air Wiper
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                      Lampu
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                      Tgl Pemeriksaan Kendaraan
+                    </th>
+                    <th class="text-center text-uppercase text-xxs font-weight-bolder opacity-7">
+                      Tgl Perawatan Kendaraan
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in monitoring %}
+                <tr>
+                    <td>
+                        <div class="d-flex px-2 py-1">
+                            <h6 class="mb-0 font-weight-normal text-sm">{{ forloop.counter }}</h6>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex px-2 py-1">
+                            <h6 class="mb-0 font-weight-normal text-sm">{{ a.kendaraan }}</h6>
+                        </div>
+                    </td>
+                    <!-- <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.no_polisi }}</p>
+                    </td> -->
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.km_kendaraan }}</p>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.oli }}</p>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.ban }}</p>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.air_radiator }}</p>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.air_wiper }}</p>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.lampu }}</p>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.tgl_pemeriksaan_kendaraan }}</p>
+                    </td>
+                    <td>
+                        <p class="text-sm font-weight-normal mb-0">{{ a.tgl_perawatan_kendaraan }}</p>
+                    </td>
+                    <td class="align-middle text-center">
+                        <a href="{% url 'hapus_monitoring' a.id %}" class="btn btn-sm btn-danger">Hapus</a>
+                        <a href="{% url 'lihat_monitoring' a.id %}" class="btn btn-sm btn-danger">Lihat</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,98 @@
+{% extends 'back/base.html' %} {% block content %}
+
+
+<div class="container-fluid py-4">
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="table-responsive">
+          <div class="toolbar"></div>
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  No
+                </th>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  transaksi
+                </th>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  method
+                </th>
+                <th
+                  class="text-uppercase text-xxs font-weight-bolder opacity-7 ps-2"
+                >
+                  reference
+                </th>
+                <th
+                  class="text-center text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  merchant_ref
+                </th>
+                <th
+                  class="text-center text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  total_pembayaran
+                </th>
+                <th
+                  class="text-center text-uppercase text-xxs font-weight-bolder opacity-7"
+                >
+                  status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a in pembayaran_back %}
+              <tr>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <h6 class="mb-0 font-weight-normal text-sm">
+                      {{ forloop.counter }}
+                    </h6>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <h6 class="mb-0 font-weight-normal text-sm">
+                      {{ a.transaksi }}
+                    </h6>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">{{ a.method }}</p>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">
+                    {{ a.reference }}
+                  </p>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">
+                    {{ a.merchant_ref }}
+                  </p>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">
+                    {{ a.total_pembayaran }}
+                  </p>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-normal mb-0">{{ a.status }}</p>
+                </td>
+                {% endfor %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
