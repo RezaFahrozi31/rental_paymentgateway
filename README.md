@@ -1,1 +1,1 @@
-# rental_paymentgateway_sanbox
+# rental_paymentgateway
